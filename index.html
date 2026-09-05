@@ -1,0 +1,64 @@
+import SwiftUI
+
+struct ContentView: View {
+    @State private var poglaskania = 0
+    @State private var szczesliwy = false
+
+    var body: some View {
+        ZStack {
+            Color.orange.opacity(0.15)
+                .ignoresSafeArea()
+
+            VStack(spacing: 25) {
+
+                Text("🐱 Głaskanie kotka")
+                    .font(.largeTitle)
+                    .bold()
+
+                Text("Kliknij kotka!")
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+
+                Spacer()
+
+                Button {
+                    poglaskaj()
+                } label: {
+                    Text(szczesliwy ? "😻" : "🐱")
+                        .font(.system(size: 180))
+                        .scaleEffect(szczesliwy ? 1.15 : 1.0)
+                }
+                .buttonStyle(.plain)
+
+                Text(szczesliwy ? "Mrrrrr... ❤️" : "Pogłaszcz mnie!")
+                    .font(.title2)
+                    .bold()
+
+                Text("Pogłaskania: \(poglaskania)")
+                    .font(.headline)
+
+                Spacer()
+
+                Button("Pogłaszcz kotka 🐾") {
+                    poglaskaj()
+                }
+                .font(.headline)
+                .buttonStyle(.borderedProminent)
+            }
+            .padding()
+        }
+    }
+
+    func poglaskaj() {
+        poglaskania += 1
+        szczesliwy = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            szczesliwy = false
+        }
+    }
+}
+
+#Preview {
+    ContentView()
+}
